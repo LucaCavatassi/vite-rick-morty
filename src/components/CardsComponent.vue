@@ -13,10 +13,7 @@
         <span class="text-center d-block pt-3 fs-5">{{ cardObject.name }}</span>
         <span class="text-center d-block fs-6">{{ cardObject.status }}</span>
         <span class="text-center d-block fs-6 pb-4">{{ cardObject.species }}</span>
-
     </div>
-    
-    
 </template>
 
 <style>
