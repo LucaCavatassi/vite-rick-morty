@@ -32,22 +32,29 @@ export default {
         status: "All"
       }
 
+      const counterValue = ""
+
       if (this.store.selectedStatus !== "All"){
         param.status = this.store.selectedStatus;
 
         axios.get("https://rickandmortyapi.com/api/character", {
           params: param,
         }).then((resp)=> {
+          this.counterValue = resp.data.info.count
+          console.log(this.counterValue);
           this.store.charactersArray = resp.data.results
           this.isReady = true
         });
       } else {
         axios.get("https://rickandmortyapi.com/api/character").then((resp)=> {
+          this.counterValue = resp.data.info.count
+          console.log(this.counterValue);
           this.store.charactersArray = resp.data.results
           this.isReady = true
         });
       }
 
+      return counterValue
     }
   }
 
@@ -60,7 +67,7 @@ export default {
   <div class="container">
     <div class="row">
         <SpinnerComponent v-if="!isReady" />
-        <AppSearch @filter="getCard" />
+        <AppSearch @filter="getCard" :counter="counterValue" />
         <AppCards v-if="isReady" :charactersArray ="store.charactersArray"/>
     </div>
   </div>
