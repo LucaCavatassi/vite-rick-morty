@@ -1,4 +1,5 @@
 <script>
+import {store} from "./store"
 import axios from "axios";
 import AppHeader from './components/AppHeader.vue';
 import AppCards from "./components/AppCards.vue";
@@ -15,22 +16,38 @@ export default {
   
   data () {
     return {
-      charactersArray: [],
+      store,
       isReady: false,
     };
   },
 
   created() {
-    axios.get("https://rickandmortyapi.com/api/character").then((resp)=> {
-      this.charactersArray = resp.data.results,
-      this.isReady = true
-      // console.log(this.charactersArray);
-    });
+    this.getCard();
   },
 
   methods: {
-    log () {
-      console.log("Cliccato");
+    getCard() {
+      this.isReady = false
+      const param = {
+        status: "All"
+      }
+
+      if (this.store.selectedStatus !== "All"){
+        param.status = this.store.selectedStatus;
+
+        axios.get("https://rickandmortyapi.com/api/character", {
+          params: param,
+        }).then((resp)=> {
+          this.store.charactersArray = resp.data.results
+          this.isReady = true
+        });
+      } else {
+        axios.get("https://rickandmortyapi.com/api/character").then((resp)=> {
+          this.store.charactersArray = resp.data.results
+          this.isReady = true
+        });
+      }
+
     }
   }
 
@@ -43,8 +60,8 @@ export default {
   <div class="container">
     <div class="row">
         <SpinnerComponent v-if="!isReady" />
-        <AppSearch @filter="log" />
-        <AppCards v-if="isReady" :charactersArray ="charactersArray"/>
+        <AppSearch @filter="getCard" />
+        <AppCards v-if="isReady" :charactersArray ="store.charactersArray"/>
     </div>
   </div>
 
