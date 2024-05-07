@@ -28,6 +28,12 @@ export default {
     });
   },
 
+  methods: {
+    log () {
+      console.log("Cliccato");
+    }
+  }
+
 }
 
 </script>
@@ -37,7 +43,7 @@ export default {
   <div class="container">
     <div class="row">
         <SpinnerComponent v-if="!isReady" />
-        <AppSearch />
+        <AppSearch @filter="log" />
         <AppCards v-if="isReady" :charactersArray ="charactersArray"/>
     </div>
   </div>
