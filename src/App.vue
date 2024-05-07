@@ -3,13 +3,14 @@ import axios from "axios";
 import AppHeader from './components/AppHeader.vue';
 import AppCards from "./components/AppCards.vue";
 import SpinnerComponent from "./components/SpinnerComponent.vue"
+import AppSearch from "./components/AppSearch.vue"
 
 export default {
   components: {
     AppHeader,
     AppCards,
     SpinnerComponent,
-
+    AppSearch,
   },
   
   data () {
@@ -35,8 +36,9 @@ export default {
   <AppHeader /> 
   <div class="container">
     <div class="row">
-        <AppCards v-if="isReady" :charactersArray ="charactersArray"/>
         <SpinnerComponent v-if="!isReady" />
+        <AppSearch />
+        <AppCards v-if="isReady" :charactersArray ="charactersArray"/>
     </div>
   </div>
 
